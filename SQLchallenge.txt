@@ -1,0 +1,93 @@
+use world;
+select * from city;
+select * from country;
+select * from countrylanguage;
+/*so city.ID is a foreign key in country capital(capital)
+country.code is a foreign key in countrylanguage(country code)
+ */
+ 
+ /*q1*/
+ select count(name) from city where countrycode = 'usa';
+/* Q2 */
+select population,lifeexpectancy from country where name = 'argentina';
+
+/* Q3 */
+select name,lifeexpectancy from country where name is not null order by lifeexpectancy desc limit 1;
+
+/* Q4 */
+select coun.name, c.name
+from city c
+join country coun ON c.ID = coun.capital;
+
+/* Q5 */
+create view Countrycodelanguage1
+as
+select coun.code, cl.Language, coun.region 
+from country coun
+join countrylanguage cl ON coun.code = cl.countrycode;
+
+select * from countrycodelanguage1 where region = 'southeast asia';
+
+/*Q6*/
+select * from country where name like 'S%' limit 25;
+
+/* Q7 */
+select * from city where countrycode like 'C%';
+create view CountryCity
+as
+select coun.code, c.ID,c.name
+from country coun
+join city c ON coun.code = c.countrycode;
+select count(name) from Countrycity where code = 'chn';
+
+/*Q8*/
+select name from country where population IS not null order by population desc limit 1;
+
+/*Q9*/ 
+select count(name) from country;
+
+/*Q10*/
+select * from country order by surfacearea desc limit 10;
+
+/* Q11 */
+
+create view CountryCity1
+as
+select coun.code, c.ID,c.name,c.population
+from country coun
+join city c ON coun.code = c.countrycode;
+
+select * from countrycity1 where code='jpn' order by population desc limit 5;
+
+/*Q12*/
+update country
+set HeadofState = 'Elizabeth II'
+where HeadofState = 'Elisabeth II';
+select code,name,headofstate from country where headofstate= 'elizabeth II';
+
+/*Q13*/
+create view Pop_Area
+as
+select *, population/surfacearea AS result from country order by result asc;
+select * from pop_area where result !=0 limit 10;
+/*q14*/
+select distinct language from countrylanguage;
+/*q15*/
+select name,GNP from country order by GNP desc limit 10;
+
+
+/*q16*/
+select distinct language, count(language) as frequency from countrylanguage group by language order by frequency desc limit 10;
+
+/*q17*/
+select countrycode from countrylanguage where language = 'german' and percentage >50;
+
+/*q18*/
+select * from country where lifeexpectancy is not null order by lifeexpectancy limit 1;
+
+
+/*q19*/
+select count(name),governmentform from country group by governmentform order by count(name) desc limit 3;
+
+/*Q20*/
+select count(name) from country where indepyear is not null;
