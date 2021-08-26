@@ -64,17 +64,25 @@ ON f.film_id = i.film_id
 join rental r 
 ON i.inventory_id  = r.inventory_id;
 
-select*from whendue where title = 'academy dinosaur'and return_date is not null;
+select * from whendue;
 
 
 /*Q15*/
 select avg(length) from film;
 
 /*Q16*/
-select * from film_category;
-select * from category;
 select * from film;
-select  * from rental;
+SELECT fc.category_id, c.name, fc.film_id, AVG(f.length) as average_length
+FROM film_category fc
+JOIN category c
+ON fc.category_id=c.category_id
+JOIN film f
+ON f.film_id=fc.film_id
+GROUP BY name
+;
+select* from category;
+select * from film_category;
+select * from titlecategory;
 
 /*17*/
 select * from film where description like '%Robot%';
